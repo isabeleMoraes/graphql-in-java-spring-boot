@@ -1,11 +1,13 @@
 package com.isabele.moraes.builder;
 
 import com.isabele.moraes.model.Actor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ActorsBuilder {
     public List<Actor> actors = new ArrayList<>();
 
@@ -27,15 +29,15 @@ public class ActorsBuilder {
     public List<Actor> getActors(Long... ids){
         List<Actor> actorList = new ArrayList<>();
 
-        for(Long id : ids){
-            for (Actor actor : actors){
-                if(actor.id() == id){
-                    actorList.add(actor);
-                }
-            }
+        for(Long id: ids){
+            actorList.add(getActorById(id));
         }
 
         return actorList;
+    }
+
+    public Actor getActorById(Long id){
+        return actors.stream().filter(actor -> actor.id().equals(id)).findFirst().get();
     }
 
 }

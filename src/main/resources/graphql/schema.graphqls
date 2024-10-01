@@ -1,0 +1,22 @@
+type Query {
+    movieById(id: ID): Movie
+    actorById(id:ID): Actor
+}
+
+type Movie{
+    id: ID
+    name: String
+    actors: [Actor]
+    gender: Gender
+}
+
+type Actor{
+    id: ID
+    name: String
+    dateOfBirth: String
+}
+
+enum Gender{
+    COMEDY
+    ROMANCE
+}

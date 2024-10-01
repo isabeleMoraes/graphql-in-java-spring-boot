@@ -1,0 +1,12 @@
+query movieDetails($id: ID){
+    movieById(id: $id){
+        id
+        name
+        actors{
+            id
+            name
+            dateOfBirth
+        }
+        gender
+    }
+}
