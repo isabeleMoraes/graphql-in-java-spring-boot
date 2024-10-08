@@ -1,12 +1,14 @@
 type Query {
     movieById(id: ID): Movie
-    actorById(id:ID): Actor
+    actorById(id: ID): Actor
+    findAllMovies:[Movie]
 }
 
 type Movie{
     id: ID
     name: String
     actors: [Actor]
+    releasedDate: String
     gender: Gender
 }
 
@@ -19,4 +21,18 @@ type Actor{
 enum Gender{
     COMEDY
     ROMANCE
+}
+
+type Mutation{
+    createMovie(name:String, actorIds: [ID], releasedDate: String, gender: Gender): Movie
+    updateMovie(movie: UpdateMovieInput!):Movie
+    deleteMovie(id: ID):Movie
+}
+
+input UpdateMovieInput {
+    id: ID
+    name: String
+    actors: [ID]
+    releasedDate: String
+    gender: Gender
 }

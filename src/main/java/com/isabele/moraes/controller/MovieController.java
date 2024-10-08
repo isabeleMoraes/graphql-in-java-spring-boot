@@ -3,20 +3,24 @@ package com.isabele.moraes.controller;
 import com.isabele.moraes.builder.ActorsBuilder;
 import com.isabele.moraes.builder.MoviesBuilder;
 import com.isabele.moraes.model.Actor;
+import com.isabele.moraes.model.Gender;
 import com.isabele.moraes.model.Movie;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.isabele.moraes.model.UpdateMovieInput;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class MovieController {
 
-    @Autowired
-    private MoviesBuilder moviesBuilder;
+    private MoviesBuilder moviesBuilder = new MoviesBuilder();
 
-    @Autowired
-    private ActorsBuilder actorsBuilder;
+    private ActorsBuilder actorsBuilder = new ActorsBuilder();
 
     @QueryMapping
     public Movie movieById(@Argument Long id){
@@ -28,10 +32,35 @@ public class MovieController {
         return actorsBuilder.getActorById(id);
     }
 
-    //TODO: O que ainda desejo fazer
-    /**
-     * Desenvolver esse mesmo controller no java puro para entender o que tem por baixo das anotations.
-     * Desenvolver os testes de integração descente, nao só o slice of teste
-     */
+    @MutationMapping
+    public Movie createMovie(@Argument String name, @Argument List<Long> actorIds, @Argument LocalDate releasedDate, @Argument Gender gender){
+        return moviesBuilder.addMovie(name, getActorsById(actorIds),releasedDate,gender);
+    }
+
+    @QueryMapping
+    public List<Movie> findAllMovies(){
+        return moviesBuilder.findAll();
+    }
+
+    @MutationMapping
+    public Movie updateMovie(@Argument("movie") UpdateMovieInput updateMovieInput){
+        return moviesBuilder.updateMovie(new Movie(updateMovieInput.id(), updateMovieInput.name(), getActorsById(updateMovieInput.actorIds()), updateMovieInput.releasedDate(), updateMovieInput.gender()));
+    }
+
+    private List<Actor> getActorsById(List<Long> actorIds){
+        List<Actor> actors = null;
+        if(actorIds != null){
+            actors = new ArrayList<>(); 
+            for(Long id: actorIds){
+                actors.add(actorsBuilder.getActorById(id));
+            }
+        }
+        return actors;
+    }
+
+    @MutationMapping
+    public Movie deleteMovie(@Argument Long id){
+        return moviesBuilder.deleteMovie(id);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.isabele.moraes.builder;
 
+import com.isabele.moraes.model.Actor;
 import com.isabele.moraes.model.Gender;
 import com.isabele.moraes.model.Movie;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Component
 public class MoviesBuilder {
@@ -27,6 +30,55 @@ public class MoviesBuilder {
 
     public Movie getMovieById(Long id){
         return movies.stream().filter(movie -> movie.id().equals(id)).findFirst().get();
+    }
+    public Movie addMovie(String name, List<Actor> actors, LocalDate releasedDate, Gender gender){
+        Long id = new Random().nextLong();
+        Movie movie = new Movie(id,name,actors,releasedDate,gender);
+        movies.add(movie);
+
+        return movie;
+    }
+
+    public List<Movie> findAll(){
+        return movies;
+    }
+
+    public Movie updateMovie(Movie newMovie){
+        Optional<Movie> movieOptional = movies.stream().filter(m -> m.id() == newMovie.id()).findAny();
+        Movie oldMovie = null;
+
+        if(movieOptional.isPresent()){
+            oldMovie = movieOptional.get();
+            int index = movies.indexOf(oldMovie);
+
+            if(newMovie.name() != null){
+                oldMovie = oldMovie.withName(newMovie.name());
+            }
+            if(newMovie.actors() != null){
+                oldMovie = oldMovie.withActors(newMovie.actors());
+            }
+            if(newMovie.gender() != null){
+                oldMovie = oldMovie.withGender(newMovie.gender());
+            }
+            if(newMovie.releasedDate() != null){
+                oldMovie = oldMovie.withReleasedDate(newMovie.releasedDate());
+            }
+
+            movies.set(index, oldMovie);
+        }
+
+        return oldMovie;
+    }
+
+    public Movie deleteMovie(Long id){
+        Optional<Movie> movieOptional = movies.stream().filter(m -> m.id() == id).findAny();
+        Movie movie = null;
+        if (movieOptional.isPresent()){
+            movie = movieOptional.get();
+            movies.remove(movie);
+        }
+
+        return movie;
     }
 
 }
