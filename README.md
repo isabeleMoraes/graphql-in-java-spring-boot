@@ -5,6 +5,8 @@ Java project with spring using graphQL to comunication
 This project was developed to study implementation with and without spring.
 So in the "manual" package you can see how graphQL works without spring annotations.
 
+![img.png](img.png)
+
 ## Querys
 ````query movie{
   movieById(id: 1){
