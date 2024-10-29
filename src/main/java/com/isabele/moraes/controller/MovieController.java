@@ -1,11 +1,12 @@
 package com.isabele.moraes.controller;
 
-import com.isabele.moraes.builder.ActorsBuilder;
-import com.isabele.moraes.builder.MoviesBuilder;
+import com.isabele.moraes.maintainer.ActorsMaintainer;
+import com.isabele.moraes.maintainer.MoviesMaintainer;
 import com.isabele.moraes.model.Actor;
 import com.isabele.moraes.model.Gender;
 import com.isabele.moraes.model.Movie;
 import com.isabele.moraes.model.UpdateMovieInput;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -18,9 +19,11 @@ import java.util.List;
 @Controller
 public class MovieController {
 
-    private MoviesBuilder moviesBuilder = new MoviesBuilder();
+    @Autowired
+    private MoviesMaintainer moviesBuilder;
 
-    private ActorsBuilder actorsBuilder = new ActorsBuilder();
+    @Autowired
+    private ActorsMaintainer actorsBuilder;
 
     @QueryMapping
     public Movie movieById(@Argument Long id){

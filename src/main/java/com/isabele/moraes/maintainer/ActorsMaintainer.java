@@ -1,4 +1,4 @@
-package com.isabele.moraes.builder;
+package com.isabele.moraes.maintainer;
 
 import com.isabele.moraes.model.Actor;
 import org.springframework.stereotype.Component;
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ActorsBuilder {
+public class ActorsMaintainer {
     public List<Actor> actors = new ArrayList<>();
 
-    public ActorsBuilder() {
+    public ActorsMaintainer() {
         buildActors();
     }
 

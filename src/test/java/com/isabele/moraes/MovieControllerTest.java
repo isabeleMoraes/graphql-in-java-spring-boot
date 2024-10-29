@@ -1,16 +1,23 @@
 package com.isabele.moraes;
 
-import com.isabele.moraes.builder.ActorsBuilder;
-import com.isabele.moraes.builder.MoviesBuilder;
 import com.isabele.moraes.controller.MovieController;
+import com.isabele.moraes.maintainer.ActorsMaintainer;
+import com.isabele.moraes.maintainer.MoviesMaintainer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
+
 @GraphQlTest(MovieController.class)
 public class MovieControllerTest {
+
+    @MockBean
+    private MoviesMaintainer moviesMaintainer;
+
+    @MockBean
+    private ActorsMaintainer actorsMaintainer;
 
     @Autowired
     private GraphQlTester graphQlTester;

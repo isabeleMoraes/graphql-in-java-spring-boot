@@ -1,4 +1,4 @@
-package com.isabele.moraes.builder;
+package com.isabele.moraes.maintainer;
 
 import com.isabele.moraes.model.Actor;
 import com.isabele.moraes.model.Gender;
@@ -12,13 +12,13 @@ import java.util.Optional;
 import java.util.Random;
 
 @Component
-public class MoviesBuilder {
+public class MoviesMaintainer {
 
-    private final ActorsBuilder actorBuilder = new ActorsBuilder();
+    private final ActorsMaintainer actorBuilder = new ActorsMaintainer();
 
     public List<Movie> movies = new ArrayList<>();
 
-    public MoviesBuilder() {
+    public MoviesMaintainer() {
         buildMovies();
     }
 

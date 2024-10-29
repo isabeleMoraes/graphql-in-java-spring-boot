@@ -5,5 +5,3 @@ spring:
   graphql:
     graphiql:
       enabled: true
-    playground:
-      enabled: true
